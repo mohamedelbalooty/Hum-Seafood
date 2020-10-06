@@ -1,0 +1,53 @@
+name: humseafood
+description: A new Flutter application.
+
+version: 1.0.0+1
+
+environment:
+  sdk: ">=2.2.2 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+
+  cupertino_icons: ^0.1.2
+  introduction_screen: ^1.0.9
+  gradient_text: ^1.0.2
+  firebase_auth: ^0.16.1
+  google_sign_in: ^4.5.1
+  modal_progress_hud: ^0.1.3
+  image_picker: ^0.6.6+1
+  curved_navigation_bar: ^0.3.4
+  firebase_storage: any
+  cloud_firestore: any
+  path: any
+  provider: any
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+
+flutter:
+
+
+  uses-material-design: true
+
+
+  assets:
+    - assets/images/icons/
+    - assets/images/onboarding_images/
+    - assets/images/placeholder.jpg
+  fonts:
+    - family: BalooTamma2
+      fonts:
+        - asset: assets/fonts/BalooTamma2-Regular.ttf
+    - family: Ubuntu
+      fonts:
+        - asset: assets/fonts/Ubuntu-Regular.ttf
+  #       - asset: fonts/TrajanPro_Bold.ttf
+  #         weight: 700
+  #
+  # For details regarding fonts from package dependencies,
+  # see https://flutter.dev/custom-fonts/#from-packages
