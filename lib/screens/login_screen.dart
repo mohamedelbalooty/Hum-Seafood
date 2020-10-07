@@ -3,8 +3,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:humseafood/provider/modal_hud.dart';
-import 'package:humseafood/screens/admin/admin_screen.dart';
-import 'package:humseafood/screens/user/home_screen.dart';
+import 'package:humseafood/screens/adminView/admin_screen.dart';
+import 'package:humseafood/screens/userView/home_screen.dart';
 import 'package:humseafood/services/auth.dart';
 import 'package:humseafood/widgets/authentication_widgets/admin_button.dart';
 import 'package:humseafood/widgets/authentication_widgets/authentication_button.dart';
@@ -104,7 +104,8 @@ class _LoginScreenState extends State<LoginScreen> {
       if (checkBoxValue == true) {
         if (_password == _adminPassword) {
           try {
-            AuthResult _loginResult = await _auth.signIn(_email.trim(), _password.trim());
+            AuthResult _loginResult =
+                await _auth.signIn(_email.trim(), _password.trim());
             modalHud.loadChanging(false);
             Navigator.pushReplacementNamed(context, AdminPanel.id);
           } on PlatformException catch (exception) {

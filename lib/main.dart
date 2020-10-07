@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:humseafood/provider/meal_categoryName.dart';
+import 'package:humseafood/provider/cart_item.dart';
 import 'package:humseafood/provider/modal_hud.dart';
-import 'package:humseafood/screens/admin/adminTransactionScreens/add_meal.dart';
-import 'package:humseafood/screens/admin/adminTransactionScreens/edit_meal.dart';
-import 'package:humseafood/screens/admin/admin_screen.dart';
-import 'package:humseafood/screens/admin/adminTransactionScreens/manage_meal.dart';
+import 'package:humseafood/screens/adminView/adminTransactionScreens/add_meal.dart';
+import 'package:humseafood/screens/adminView/adminTransactionScreens/edit_meal.dart';
+import 'package:humseafood/screens/adminView/admin_screen.dart';
+import 'package:humseafood/screens/adminView/adminTransactionScreens/manage_meal.dart';
 import 'package:humseafood/screens/onboarding_screen.dart';
-import 'package:humseafood/screens/user/home_screen.dart';
-import 'package:humseafood/screens/user/meal_screen.dart';
-import 'screens/admin/adminTransactionScreens/view_order.dart';
+import 'package:humseafood/screens/userView/cart_screen.dart';
+import 'package:humseafood/screens/userView/home_screen.dart';
+import 'package:humseafood/screens/userView/meal_screen.dart';
+import 'screens/adminView/adminTransactionScreens/view_order.dart';
 import 'screens/login_screen.dart';
 import 'screens/signUp_screen.dart';
 import 'screens/splash_screen.dart';
@@ -24,8 +25,8 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider<ModalHud>(
           create: (context) => ModalHud(),
         ),
-        ChangeNotifierProvider<MealCategoryName>(
-          create: (context) => MealCategoryName(),
+        ChangeNotifierProvider<CartItem>(
+          create: (context) => CartItem(),
         ),
       ],
       child: MaterialApp(
@@ -51,6 +52,7 @@ class MyApp extends StatelessWidget {
           EditMeal.id: (context) => EditMeal(),
           ViewOrder.id: (context) => ViewOrder(),
           MealScreen.id: (context) => MealScreen(),
+          CartScreen.id: (context) => CartScreen(),
         },
       ),
     );

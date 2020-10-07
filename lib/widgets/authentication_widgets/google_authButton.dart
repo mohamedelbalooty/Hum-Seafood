@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:humseafood/screens/user/home_screen.dart';
+import 'package:humseafood/screens/userView/home_screen.dart';
 import 'package:humseafood/services/auth.dart';
 import '../../constants.dart';
 import '../custom_snackBar.dart';
@@ -41,6 +41,7 @@ class _GoogleAuthButtonState extends State<GoogleAuthButton> {
       ],
     );
   }
+
   Widget _customSocialButton(double width) {
     return GestureDetector(
       onTap: () async {

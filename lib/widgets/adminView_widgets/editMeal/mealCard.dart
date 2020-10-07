@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:humseafood/widgets/admin_widgets/editMeal/popupMenuItem/modifiedPopupMenuItemWidget.dart';
-import 'package:humseafood/widgets/admin_widgets/transaction_button.dart';
 import '../../../constants.dart';
+import '../transaction_button.dart';
+import 'popupMenuItem/modifiedPopupMenuItemWidget.dart';
 
 class MealCard extends StatelessWidget {
   String mealImage, mealName, mealPrice;

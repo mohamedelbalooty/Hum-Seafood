@@ -19,6 +19,7 @@ dependencies:
   modal_progress_hud: ^0.1.3
   image_picker: ^0.6.6+1
   curved_navigation_bar: ^0.3.4
+  toast: ^0.1.5
   firebase_storage: any
   cloud_firestore: any
   path: any

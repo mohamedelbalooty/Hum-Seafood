@@ -1,31 +1,29 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:humseafood/screens/userView/cart_screen.dart';
 import '../../../constants.dart';
+import 'drawerIcon.dart';
 
-Widget mealScreenAppBar(context, String mealName) {
+Widget homeScreenAppBar(context){
   return AppBar(
-    backgroundColor: Colors.transparent,
+    backgroundColor: KSecondColor,
     elevation: 0.0,
-    centerTitle: true,
-    automaticallyImplyLeading: true,
     title: Text(
-      mealName,
-      softWrap: false,
-      overflow: TextOverflow.ellipsis,
+      'Discover meals',
       style: TextStyle(
-        color: KWhiteColor,
         fontSize: 24.0,
-        height: 2.0,
+        color: KWhiteColor,
       ),
     ),
+    centerTitle: true,
+    leading: drawerIcon(context),
     actions: <Widget>[
       IconButton(
         onPressed: () {
-          Navigator.pop(context);
+          Navigator.pushNamed(context, CartScreen.id);
         },
         icon: Icon(
           Icons.shopping_cart,
-          size: 25.0,
+          size: 28.0,
           color: KWhiteColor,
         ),
       ),
