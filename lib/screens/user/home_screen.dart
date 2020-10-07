@@ -354,7 +354,7 @@ class _HomeScreenState extends State<HomeScreen>
         height: height,
         width: width,
         decoration: BoxDecoration(
-          color: Color(0xFFF0F3F4),
+          color: Color(0xFFECF0F1),
           borderRadius: BorderRadius.only(
             topLeft: Radius.circular(30.0),
             topRight: Radius.circular(30.0),
