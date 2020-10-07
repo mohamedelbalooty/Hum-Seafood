@@ -536,3 +536,28 @@
 // ),
 // );
 // }
+
+
+// Row(
+// children: <Widget>[
+// Text(
+// _meal.mealPrice,
+// textAlign: TextAlign.left,
+// style: TextStyle(
+// color: KBlackColor,
+// fontWeight: FontWeight.bold,
+// fontSize: 20.0,
+// ),
+// ),
+// Text(
+// ' L.E',
+// textAlign: TextAlign.left,
+// style: TextStyle(
+// color: KSecondColor,
+// fontWeight: FontWeight.bold,
+// fontSize: 20.0,
+// ),
+// ),
+// Expanded(
+// child: SizedBox(),
+// ),

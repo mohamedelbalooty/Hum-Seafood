@@ -105,7 +105,7 @@ class MealCardItem extends StatelessWidget {
                           ),
                         ),
                         SizedBox(
-                          width: width * 0.7,
+                          width: width * 0.65,
                           child: Text(
                             mealDescription,
                             softWrap: true,
