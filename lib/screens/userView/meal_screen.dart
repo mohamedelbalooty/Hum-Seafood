@@ -145,16 +145,6 @@ class _MealScreenState extends State<MealScreen> {
             ),
           ),
         ),
-        // Positioned(
-        //   bottom: 0,
-        //   child: Material(
-        //     child: Builder(
-        //       builder: (context) => addToCartButton(
-        //           context, height, width, isPortrait,
-        //           meal: _meal, quantity: _quantity),
-        //     ),
-        //   ),
-        // ),
       ],
     );
   }

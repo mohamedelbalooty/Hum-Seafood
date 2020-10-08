@@ -11,9 +11,21 @@ Widget addToCartButton(context, double height, double width, bool isPortrait,
     onTap: () {
       CartItem cartItem = Provider.of<CartItem>(context, listen: false);
       meal.mealQuantity = quantity;
-      cartItem.addItemToCart(meal);
-      Toast.show("Added to cart", context,
-          duration: Toast.LENGTH_SHORT, gravity: Toast.BOTTOM);
+      bool exist = false;
+      var mealsInCart = cartItem.meals;
+      for (var cartItem in mealsInCart) {
+        if (cartItem == meal) {
+          exist = true;
+        }
+      }
+      if (exist) {
+        Toast.show("You\'ve add this item before", context,
+            duration: Toast.LENGTH_LONG, gravity: Toast.BOTTOM);
+      } else {
+        cartItem.addItemToCart(meal);
+        Toast.show("Added to cart", context,
+            duration: Toast.LENGTH_LONG, gravity: Toast.BOTTOM);
+      }
     },
     child: Container(
       height: isPortrait ? height * 0.08 : height * 0.14,
