@@ -7,6 +7,7 @@ import 'package:humseafood/constants.dart';
 import 'package:humseafood/model/meal.dart';
 import 'package:humseafood/provider/cart_item.dart';
 import 'package:humseafood/services/store.dart';
+import 'package:humseafood/widgets/snapshot_errorMessage.dart';
 import 'package:humseafood/widgets/userView_widgets/homeScreen_widgets/homeScreenAppBar.dart';
 import 'package:humseafood/widgets/userView_widgets/homeScreen_widgets/mealCardItem.dart';
 import 'package:humseafood/widgets/userView_widgets/homeScreen_widgets/tabItem.dart';
@@ -53,9 +54,18 @@ class _HomeScreenState extends State<HomeScreen>
         // color: KSecondColor,
         backgroundColor: KSecondColor,
         items: <Widget>[
-          Icon(Icons.add, size: 30, ),
-          Icon(Icons.list, size: 30, ),
-          Icon(Icons.compare_arrows, size: 30, ),
+          Icon(
+            Icons.add,
+            size: 30,
+          ),
+          Icon(
+            Icons.list,
+            size: 30,
+          ),
+          Icon(
+            Icons.compare_arrows,
+            size: 30,
+          ),
         ],
         onTap: (index) {
           // print(index);
@@ -115,12 +125,12 @@ class _HomeScreenState extends State<HomeScreen>
               child: TabBarView(
                 controller: _tabController,
                 children: <Widget>[
-                  _getMealByCategory(KPizzaCategory),
-                  _getMealByCategory(KPastaCategory),
-                  _getMealByCategory(KSeafoodCategory),
-                  _getMealByCategory(KSoupCategory),
-                  _getMealByCategory(KSteakCategory),
-                  _getMealByCategory(KSaladCategory),
+                  _getMealByCategory(KPizzaCategory, width),
+                  _getMealByCategory(KPastaCategory, width),
+                  _getMealByCategory(KSeafoodCategory, width),
+                  _getMealByCategory(KSoupCategory, width),
+                  _getMealByCategory(KSteakCategory, width),
+                  _getMealByCategory(KSaladCategory, width),
                 ],
               ),
             ),
@@ -130,7 +140,7 @@ class _HomeScreenState extends State<HomeScreen>
     );
   }
 
-  _getMealByCategory(String categoryName) {
+  _getMealByCategory(String categoryName, width) {
     return StreamBuilder<QuerySnapshot>(
       stream: _store.loadMeals(),
       // ignore: missing_return
@@ -185,6 +195,8 @@ class _HomeScreenState extends State<HomeScreen>
               ),
             );
           }
+        } else if (snapshot.hasError) {
+          snapshotErrorMessage(width, snapshot);
         } else {
           return Center(
             child: CircularProgressIndicator(),

@@ -7,4 +7,8 @@ class CartItem extends ChangeNotifier{
     meals.add(meal);
     notifyListeners();
   }
+  deleteItemFromCart(Meal meal){
+    meals.remove(meal);
+    notifyListeners();
+  }
 }

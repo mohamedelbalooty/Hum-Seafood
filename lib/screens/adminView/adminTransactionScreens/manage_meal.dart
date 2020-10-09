@@ -59,12 +59,13 @@ class _ManageMealsState extends State<ManageMeals> {
                     mealImage: _meals[index].imageURL,
                     onTap1: () {
                       Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => EditMeal(
-                              meals: _meals[index],
-                            ),
-                          ));
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => EditMeal(
+                            meals: _meals[index],
+                          ),
+                        ),
+                      );
                     },
                     onTap2: () {
                       _store.deleteMeal(_meals[index].mealId);

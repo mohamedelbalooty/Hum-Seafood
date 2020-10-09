@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:humseafood/SharedFunctions/addMealInCart.dart';
 import '../../../constants.dart';
 
 class MealCardItem extends StatelessWidget {
@@ -52,12 +53,22 @@ class MealCardItem extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 GestureDetector(
-                  onTap: () {},
+                  onTap: () {
+                    // addMealInCart(context, );
+                  },
+                  // child: Padding(
+                  //   padding: EdgeInsets.all(10.0),
+                  //   child: Icon(
+                  //     Icons.favorite,
+                  //     size: 28.0,
+                  //     color: Colors.redAccent,
+                  //   ),
+                  // ),
                   child: Container(
                     height: 40.0,
                     width: 50.0,
                     decoration: BoxDecoration(
-                      color: Colors.deepOrangeAccent.withOpacity(0.9),
+                      color: Colors.white.withOpacity(0.8),
                       borderRadius: BorderRadius.only(
                         bottomLeft: Radius.circular(20.0),
                         topRight: Radius.circular(20.0),
@@ -65,8 +76,9 @@ class MealCardItem extends StatelessWidget {
                     ),
                     child: Center(
                       child: Icon(
-                        Icons.add_shopping_cart,
-                        color: KWhiteColor,
+                        Icons.favorite,
+                        size: 28.0,
+                        color: Colors.redAccent,
                       ),
                     ),
                   ),

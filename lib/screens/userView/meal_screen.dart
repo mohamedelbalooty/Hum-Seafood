@@ -41,9 +41,6 @@ class _MealScreenState extends State<MealScreen> {
         ),
         Scaffold(
           appBar: mealScreenAppBar(context, _meal.mealName),
-          bottomNavigationBar: addToCartButton(
-                context, height, width, isPortrait,
-                meal: _meal, quantity: _quantity),
           backgroundColor: Colors.transparent,
           body: SingleChildScrollView(
             child: Padding(
@@ -144,6 +141,9 @@ class _MealScreenState extends State<MealScreen> {
               ),
             ),
           ),
+          bottomNavigationBar: addToCartButton(
+              context, height, width, isPortrait,
+              meal: _meal, quantity: _quantity),
         ),
       ],
     );
