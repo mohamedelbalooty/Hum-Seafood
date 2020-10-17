@@ -4,11 +4,12 @@ import 'package:humseafood/SharedFunctions/customShowMenu.dart';
 import 'package:humseafood/constants.dart';
 import 'package:humseafood/model/meal.dart';
 import 'package:humseafood/provider/cart_item.dart';
+import 'package:humseafood/screens/userView/home_screen.dart';
 import 'package:humseafood/screens/userView/meal_screen.dart';
-import 'package:humseafood/widgets/adminView_widgets/editMeal/popupMenuItem/modifiedPopupMenuItemWidget.dart';
 import 'package:humseafood/widgets/userView_widgets/cartScreen_widgets/cartItem.dart';
 import 'package:humseafood/widgets/userView_widgets/cartScreen_widgets/cartScreenAppBar.dart';
 import 'package:provider/provider.dart';
+import 'map_screen.dart';
 
 class CartScreen extends StatelessWidget {
   static String id = 'CartScreen';
@@ -34,26 +35,6 @@ class CartScreen extends StatelessWidget {
         ),
         Scaffold(
           backgroundColor: Colors.transparent,
-          bottomNavigationBar: Container(
-            height: isPortrait ? height * 0.08 : height * 0.14,
-            width: width,
-            decoration: BoxDecoration(
-              color: KSecondColor,
-              borderRadius: BorderRadius.only(
-                topRight: Radius.circular(40.0),
-              ),
-            ),
-            child: Center(
-              child: Text(
-                'Order Now',
-                style: TextStyle(
-                  color: KWhiteColor,
-                  fontSize: 20.0,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ),
-          ),
           appBar: cartScreenAppBar(context, isPortrait, width),
           body: LayoutBuilder(
             builder: (context, constrains) {
@@ -63,40 +44,6 @@ class CartScreen extends StatelessWidget {
                   itemBuilder: (context, index) {
                     return GestureDetector(
                       onTapUp: (TapUpDetails details) async {
-                        // double dxLeft = details.globalPosition.dx;
-                        // double dyTop = details.globalPosition.dy;
-                        // double dxRight = width - dxLeft;
-                        // double dyBottom = width - dyTop;
-                        // await showMenu(
-                        //   context: context,
-                        //   shape: OutlineInputBorder(
-                        //     borderRadius: BorderRadius.circular(15.0),
-                        //   ),
-                        //   position: RelativeRect.fromLTRB(
-                        //       dxLeft, dyTop, dxRight, dyBottom),
-                        //   items: [
-                        //     modifiedPopupMenuItemWidget(
-                        //         width, Colors.indigoAccent, Colors.cyan, 'Edit',
-                        //         () {
-                        //       Navigator.pop(context);
-                        //       Navigator.pushNamed(context, MealScreen.id,
-                        //           arguments: _meals[index]);
-                        //       Provider.of<CartItem>(context, listen: false)
-                        //           .deleteItemFromCart(_meals[index]);
-                        //     }),
-                        //     modifiedPopupMenuItemWidget(
-                        //       width,
-                        //       Colors.redAccent,
-                        //       Colors.pinkAccent,
-                        //       'Delete',
-                        //       () {
-                        //         Navigator.pop(context);
-                        //         Provider.of<CartItem>(context, listen: false)
-                        //             .deleteItemFromCart(_meals[index]);
-                        //       },
-                        //     ),
-                        //   ],
-                        // );
                         customShowMenu(
                           context,
                           width,
@@ -134,8 +81,88 @@ class CartScreen extends StatelessWidget {
               }
             },
           ),
+          bottomNavigationBar: InkWell(
+            onTap: () {
+              customShowDialog(_meals, context);
+            },
+            child: Container(
+              height: isPortrait ? height * 0.08 : height * 0.14,
+              width: width,
+              decoration: BoxDecoration(
+                color: KSecondColor,
+                borderRadius: BorderRadius.only(
+                  topRight: Radius.circular(40.0),
+                ),
+              ),
+              child: Center(
+                child: Text(
+                  'Order Now',
+                  style: TextStyle(
+                    color: KWhiteColor,
+                    fontSize: 20.0,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+            ),
+          ),
         ),
       ],
     );
   }
+  void customShowDialog (List<Meal> meals, context) async{
+    var price = getTotalPrice(meals);
+    AlertDialog alertDialog = AlertDialog(
+      title: Text(
+        'Total Price = $price L.E',
+        style: TextStyle(color: Colors.blueGrey.withOpacity(0.9)),
+      ),
+      content: InkWell(
+        onTap: (){
+          Navigator.pushNamed(context, MapScreen.id);
+        },
+        child: Container(
+          height: 40.0,
+          width: 80.0,
+          decoration: BoxDecoration(
+            color: KSecondColor,
+            borderRadius: BorderRadius.circular(20.0),
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: <Widget>[
+              Icon(Icons.add_location, color: KWhiteColor,),
+              Text(
+                  'Select your location',
+                style: TextStyle(color: KWhiteColor, fontSize: 18.0),
+              ),
+            ],
+          ),
+        ),
+      ),
+      shape: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(10.0),
+        borderSide: BorderSide(color: KWhiteColor),
+      ),
+    );
+    await showDialog(
+      context: context,
+      builder: (context){
+        return alertDialog;
+      }
+    );
+  }
+  getTotalPrice(List<Meal> meals){
+    var price = 0.0;
+    for(var meal in meals){
+      price += double.parse(meal.mealPrice) * meal.mealQuantity;
+    }
+    return price;
+  }
 }
+
+
+
+
+

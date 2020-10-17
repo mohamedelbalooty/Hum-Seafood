@@ -14,6 +14,7 @@ import 'screens/login_screen.dart';
 import 'screens/signUp_screen.dart';
 import 'screens/splash_screen.dart';
 import 'package:provider/provider.dart';
+import 'screens/userView/map_screen.dart';
 
 void main() => runApp(MyApp());
 
@@ -53,6 +54,7 @@ class MyApp extends StatelessWidget {
           ViewOrder.id: (context) => ViewOrder(),
           MealScreen.id: (context) => MealScreen(),
           CartScreen.id: (context) => CartScreen(),
+          MapScreen.id: (context) => MapScreen(),
         },
       ),
     );

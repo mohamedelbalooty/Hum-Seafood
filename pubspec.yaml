@@ -20,10 +20,13 @@ dependencies:
   image_picker: ^0.6.6+1
   curved_navigation_bar: ^0.3.4
   toast: ^0.1.5
+  google_maps_flutter: ^0.5.21+17
+  geolocator: ^5.2.0
   firebase_storage: any
   cloud_firestore: any
   path: any
   provider: any
+
 
 dev_dependencies:
   flutter_test:

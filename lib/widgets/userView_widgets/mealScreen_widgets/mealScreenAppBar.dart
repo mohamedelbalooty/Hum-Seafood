@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:humseafood/screens/userView/cart_screen.dart';
-import 'package:humseafood/screens/userView/home_screen.dart';
 import '../../../constants.dart';
 
 Widget mealScreenAppBar(context, String mealName) {
@@ -11,7 +10,7 @@ Widget mealScreenAppBar(context, String mealName) {
     centerTitle: true,
     leading: IconButton(
       onPressed: () {
-        Navigator.pushNamed(context, HomeScreen.id);
+        Navigator.pop(context);
       },
       icon: Icon(
         Icons.arrow_back,

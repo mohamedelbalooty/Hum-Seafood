@@ -47,9 +47,7 @@ class _MealScreenState extends State<MealScreen> {
               padding: EdgeInsets.symmetric(horizontal: 35.0),
               child: Column(
                 children: <Widget>[
-                  SizedBox(
-                    height: 10.0,
-                  ),
+                  SizedBox(height: 10.0),
                   Hero(
                     tag: 'Hero',
                     child: Container(
@@ -65,9 +63,7 @@ class _MealScreenState extends State<MealScreen> {
                       ),
                     ),
                   ),
-                  SizedBox(
-                    height: 10.0,
-                  ),
+                  SizedBox(height: 10.0),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
