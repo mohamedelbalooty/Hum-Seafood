@@ -1,195 +1,117 @@
 import 'dart:async';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:geolocator/geolocator.dart';
-import 'package:humseafood/constants.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:humseafood/constants.dart';
+import 'package:location/location.dart';
 
 class MapScreen extends StatefulWidget {
   static String id = 'MapScreen';
 
   @override
-  _MapScreenState createState() => _MapScreenState();
+  _MyAppState createState() => _MyAppState();
 }
 
-class _MapScreenState extends State<MapScreen> {
-
-  // @override
-  // void initState() {
-  //   // TODO: implement initState
-  //   super.initState();
-  //   getUserLocation();
-  // }
-  // double latitude;
-  // double longitude;
-  // Future getUserLocation() async{
-  //   Position currentPosition = await Geolocator()
-  //       .getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
-  //   setState(() {
-  //     latitude = currentPosition.latitude;
-  //     longitude = currentPosition.longitude;
-  //   });
-  //   print(latitude);
-  //   print(longitude);
-  // }
-
-
-
-
-  // static var currentLocation = LocationData;
-  //
-  // var location = new Location();
-  //
-  // Future _getLocation() async {
-  //   try {
-  //     location.onLocationChanged.listen((LocationData currentLocation) {
-  //       print('Latitude:${currentLocation.latitude}');
-  //       print('Longitude:${currentLocation.longitude}');
-  //       return LatLng(currentLocation.latitude, currentLocation.longitude);
-  //     });
-  //   } catch (e) {
-  //     print('ERROR:$e');
-  //     currentLocation = null;
-  //   }
-  //
-  // }
-  // @override
-  // void initState() {
-  //   _getLocation();
-  //   super.initState();
-  // }
-  //
-  // static final CameraPosition _currentPosition = CameraPosition(
-  //   target: LatLng(currentLocation.latitude  ,  currentLocation.longitude),
-  //   zoom: 14.4746,
-  // );
-
-
-  final Key _mapKey = UniqueKey();
-
-  Completer<GoogleMapController> _googleMapController = Completer();
-
-
-  Completer<GoogleMapController> controller1;
-
-
-  static LatLng _initialPosition;
-  final Set<Marker> _markers = {};
-  static  LatLng _lastMapPosition = _initialPosition;
+class _MyAppState extends State<MapScreen> {
+  double latitude;
+  double longitude;
+  String address;
+  bool loading = true;
 
   @override
-  void initState() {
+  initState() {
     super.initState();
-    _getUserLocation();
+    loading = true;
+    getLocation();
   }
-  void _getUserLocation() async {
-    Position position = await Geolocator().getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
-    List<Placemark> placemark = await Geolocator().placemarkFromCoordinates(position.latitude, position.longitude);
+
+  Future getLocation() async {
+    final location = Location();
+    LocationData currentLocation = await location.getLocation();
     setState(() {
-      _initialPosition = LatLng(position.latitude, position.longitude);
-      print('${placemark[0].subLocality} ${placemark[0].name}');
+        latitude = currentLocation.latitude;
+        longitude = currentLocation.longitude;
+        loading = false;
+      },
+    );
+  }
+  getCurrentAddress() async{
+    List<Placemark> placemark = await Geolocator().placemarkFromCoordinates(latitude, longitude);
+    setState(() {
+      address = '${placemark[0].administrativeArea} ${placemark[0].locality} ${placemark[0].name}';
     });
   }
-
-
-  _onMapCreated(GoogleMapController controller) {
-    setState(() {
-      controller1.complete(controller);
-    });
-  }
-
-
-
-
-
-
-  // CameraPosition _currentCameraPosition = CameraPosition(
-  //   target: LatLng(30.97063, 31.1669),
-  //   zoom: 20.0,
-  // );
 
   @override
   Widget build(BuildContext context) {
-    // getUserLocation();
+    // print(address);
+    bool isPortrait =
+        MediaQuery.of(context).orientation == Orientation.portrait;
+    double height = MediaQuery.of(context).size.height;
+    double width = MediaQuery.of(context).size.width;
     return Scaffold(
       appBar: AppBar(
         backgroundColor: KSecondColor,
         automaticallyImplyLeading: true,
+        centerTitle: true,
         title: Text(
-          'Map View',
+          'My Location',
           style: TextStyle(
-            fontSize: 24.0,
             color: KWhiteColor,
+            fontSize: 24.0,
           ),
         ),
       ),
-      body: GoogleMap(
+      body: loading == false
+          ? GoogleMap(
         mapType: MapType.normal,
+        myLocationButtonEnabled: true,
+        myLocationEnabled: true,
         initialCameraPosition: CameraPosition(
-          target: _initialPosition,
-          zoom: 14.4746,
+          target: LatLng(latitude, longitude),
+          zoom: 17.0,
         ),
-        onMapCreated: (GoogleMapController controller){
-          _googleMapController.complete(controller);
+      )
+          : Center(
+        child: Image.asset('assets/images/loading.gif'),
+      ),
+      bottomSheet: GestureDetector(
+        onTap: () async{
+          await getCurrentAddress();
+          print(address);
         },
+        child: Container(
+          height: height*0.4,
+          width: width,
+          margin: EdgeInsets.only(left: 30.0),
+          decoration: BoxDecoration(
+            color: KSecondColor,
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(30.0),
+              topRight: Radius.circular(30.0),
+            ),
+            // boxShadow: [
+            //   BoxShadow(
+            //     color: Colors.black26,
+            //     offset: Offset(3, 4),
+            //     blurRadius: 2.5,
+            //   ),
+            // ],
+          ),
+          child: Column(
+            children: [
+              Row(
+                children: [
+                  Icon(Icons.location_on, size: 50.0, )
+                ],
+              ),
+
+            ],
+          ),
+        ),
       ),
     );
   }
 }
-
-
-// import 'package:flutter/material.dart';
-// import 'package:google_maps_flutter/google_maps_flutter.dart';
-//
-//
-// class MapScreen extends StatefulWidget
-// {
-//   static String id = 'MapScreen';
-//   ///key is required, otherwise map crashes on hot reload
-//   MapScreen({ @required Key key})
-//       :
-//         super(key:key);
-//
-//   @override
-//   _MyAppState createState() => _MyAppState();
-// }
-//
-// class _MyAppState extends State<MapScreen>
-// {
-//   GoogleMapController _mapController ;
-//
-//   void _onMapCreated(GoogleMapController controller) {
-//     _mapController = controller;
-//   }
-//   @override
-//   Widget build(BuildContext context)
-//   {
-//     return Scaffold(
-//       //also this avoids it crashing/breaking when the keyboard is up
-//         resizeToAvoidBottomInset: false,
-//         body: GoogleMap(
-//           onMapCreated: _onMapCreated,
-//           initialCameraPosition: CameraPosition(
-//             target: const LatLng(30.0925973,31.3219982),
-//             zoom: 11.0,
-//           ),
-//         )
-//     );
-//   }
-// }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

@@ -21,7 +21,8 @@ dependencies:
   curved_navigation_bar: ^0.3.4
   toast: ^0.1.5
   google_maps_flutter: ^0.5.21+17
-  geolocator: ^5.2.0
+  location: ^3.0.2
+  geolocator: ^5.3.2+2
   firebase_storage: any
   cloud_firestore: any
   path: any
@@ -43,6 +44,7 @@ flutter:
     - assets/images/icons/
     - assets/images/onboarding_images/
     - assets/images/placeholder.jpg
+    - assets/images/loading.gif
   fonts:
     - family: BalooTamma2
       fonts:
