@@ -5,13 +5,11 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:humseafood/constants.dart';
 import 'package:humseafood/model/meal.dart';
-import 'package:humseafood/provider/cart_item.dart';
 import 'package:humseafood/services/store.dart';
 import 'package:humseafood/widgets/snapshot_errorMessage.dart';
 import 'package:humseafood/widgets/userView_widgets/homeScreen_widgets/homeScreenAppBar.dart';
 import 'package:humseafood/widgets/userView_widgets/homeScreen_widgets/mealCardItem.dart';
 import 'package:humseafood/widgets/userView_widgets/homeScreen_widgets/tabItem.dart';
-import 'package:provider/provider.dart';
 import 'meal_screen.dart';
 
 class HomeScreen extends StatefulWidget {

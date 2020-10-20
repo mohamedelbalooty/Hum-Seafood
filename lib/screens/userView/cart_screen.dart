@@ -83,7 +83,7 @@ class CartScreen extends StatelessWidget {
           ),
           bottomNavigationBar: InkWell(
             onTap: () {
-              customShowDialog(_meals, context);
+              customShowDialog(_meals, context, width);
             },
             child: Container(
               height: isPortrait ? height * 0.08 : height * 0.14,
@@ -110,35 +110,109 @@ class CartScreen extends StatelessWidget {
       ],
     );
   }
-  void customShowDialog (List<Meal> meals, context) async{
-    var price = getTotalPrice(meals);
+
+  GlobalKey<FormState> _globalKey = GlobalKey<FormState>();
+  String _phoneNumber;
+
+  void customShowDialog(List<Meal> meals, context, width) async {
+    String price = getTotalPrice(meals);
     AlertDialog alertDialog = AlertDialog(
-      title: Text(
-        'Total Price = $price L.E',
-        style: TextStyle(color: Colors.blueGrey.withOpacity(0.9)),
-      ),
-      content: InkWell(
-        onTap: (){
-          Navigator.pushNamed(context, MapScreen.id);
-        },
-        child: Container(
-          height: 40.0,
-          width: 80.0,
-          decoration: BoxDecoration(
-            color: KSecondColor,
-            borderRadius: BorderRadius.circular(20.0),
-          ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: <Widget>[
-              Icon(Icons.add_location, color: KWhiteColor,),
-              Text(
-                  'Select your location',
-                style: TextStyle(color: KWhiteColor, fontSize: 18.0),
+      // title: Text(
+      //   'Total Price = $price L.E',
+      //   style: TextStyle(color: Colors.blueGrey.withOpacity(0.9),),
+      // ),
+      content: SizedBox(
+        height: 110.0,
+        width: width,
+        child: Column(
+          children: [
+            Expanded(
+              child: Form(
+                key: _globalKey,
+                child: TextFormField(
+                  validator: (String value) {
+                    if (value.isEmpty) {
+                      return 'Enter phone number';
+                    } else {
+                      return null;
+                    }
+                  },
+                  onSaved: (String value) {
+                    _phoneNumber = value;
+                  },
+                  cursorColor: KSecondColor,
+                  style: TextStyle(color: Colors.blueGrey),
+                  decoration: InputDecoration(
+                    labelText: 'Phone Number',
+                    labelStyle: TextStyle(
+                      color: Colors.blueGrey.withOpacity(0.9),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(8.0),
+                      borderSide: BorderSide(color: KSecondColor, width: 1.0),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(8.0),
+                      borderSide: BorderSide(color: KSecondColor, width: 1.0),
+                    ),
+                    errorBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(8.0),
+                      borderSide: BorderSide(color: KSecondColor, width: 1.0),
+                    ),
+                    focusedErrorBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(8.0),
+                      borderSide: BorderSide(color: KSecondColor, width: 1.0),
+                    ),
+                  ),
+                ),
               ),
-            ],
-          ),
+            ),
+            SizedBox(
+              height: 8.0,
+            ),
+            Expanded(
+              child: InkWell(
+                onTap: () {
+                  if(_globalKey.currentState.validate()){
+                    _globalKey.currentState.save();
+                    _globalKey.currentState.reset();
+                    Navigator.pop(context);
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => MapScreen(
+                          totalPrice: price,
+                          meals: meals,
+                        ),
+                      ),
+                    );
+                  }
+
+                },
+                child: Container(
+                  width: width,
+                  decoration: BoxDecoration(
+                    color: KSecondColor,
+                    borderRadius: BorderRadius.circular(8.0),
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: <Widget>[
+                      Icon(
+                        Icons.add_location,
+                        color: KWhiteColor,
+                      ),
+                      Text(
+                        'Select your location',
+                        style: TextStyle(color: KWhiteColor, fontSize: 18.0),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          ],
         ),
       ),
       shape: OutlineInputBorder(
@@ -147,22 +221,17 @@ class CartScreen extends StatelessWidget {
       ),
     );
     await showDialog(
-      context: context,
-      builder: (context){
-        return alertDialog;
-      }
-    );
+        context: context,
+        builder: (context) {
+          return alertDialog;
+        });
   }
-  getTotalPrice(List<Meal> meals){
+
+  getTotalPrice(List<Meal> meals) {
     var price = 0.0;
-    for(var meal in meals){
+    for (var meal in meals) {
       price += double.parse(meal.mealPrice) * meal.mealQuantity;
     }
-    return price;
+    return price.toString();
   }
 }
-
-
-
-
-
