@@ -9,7 +9,8 @@ import 'package:humseafood/screens/onboarding_screen.dart';
 import 'package:humseafood/screens/userView/cart_screen.dart';
 import 'package:humseafood/screens/userView/home_screen.dart';
 import 'package:humseafood/screens/userView/meal_screen.dart';
-import 'screens/adminView/adminTransactionScreens/view_order.dart';
+import 'screens/adminView/adminTransactionScreens/order_details.dart';
+import 'screens/adminView/adminTransactionScreens/view_orders.dart';
 import 'screens/login_screen.dart';
 import 'screens/signUp_screen.dart';
 import 'screens/splash_screen.dart';
@@ -39,8 +40,8 @@ class MyApp extends StatelessWidget {
           primaryColor: Colors.deepOrange,
           buttonTheme: ButtonThemeData(minWidth: 5.0),
         ),
-        // initialRoute: SplashScreen.id,
-        initialRoute: HomeScreen.id,
+        initialRoute: SplashScreen.id,
+        // initialRoute: HomeScreen.id,
         routes: {
           SplashScreen.id: (context) => SplashScreen(),
           OnboardingScreen.id: (context) => OnboardingScreen(),
@@ -51,10 +52,10 @@ class MyApp extends StatelessWidget {
           AddMeal.id: (context) => AddMeal(),
           ManageMeals.id: (context) => ManageMeals(),
           EditMeal.id: (context) => EditMeal(),
-          ViewOrder.id: (context) => ViewOrder(),
+          ViewOrders.id: (context) => ViewOrders(),
           MealScreen.id: (context) => MealScreen(),
           CartScreen.id: (context) => CartScreen(),
-          // MapScreen.id: (context) => MapScreen(),
+          OrderDetails.id: (context) => OrderDetails(),
         },
       ),
     );

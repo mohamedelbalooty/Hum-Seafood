@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -6,14 +7,22 @@ import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:humseafood/constants.dart';
 import 'package:humseafood/model/meal.dart';
+import 'package:humseafood/services/auth.dart';
+import 'package:humseafood/services/store.dart';
+import 'package:humseafood/widgets/userView_widgets/mapScreen_widgets/confirmationOrderButton.dart';
+import 'package:intl/intl.dart';
 import 'package:location/location.dart';
+import 'package:toast/toast.dart';
 
 class MapScreen extends StatefulWidget {
-  // static String id = 'MapScreen';
+  String phoneNumber;
   String totalPrice;
   List<Meal> meals;
 
-  MapScreen({@required this.totalPrice, @required this.meals});
+  MapScreen(
+      {@required this.totalPrice,
+      @required this.meals,
+      @required this.phoneNumber});
 
   @override
   _MyAppState createState() => _MyAppState();
@@ -22,13 +31,14 @@ class MapScreen extends StatefulWidget {
 class _MyAppState extends State<MapScreen> {
   double latitude;
   double longitude;
-  String address;
-  bool loading = true;
+  String _address;
+  String _date;
+  bool _loading = true;
 
   @override
   initState() {
     super.initState();
-    loading = true;
+    _loading = true;
     getLocation();
   }
 
@@ -39,7 +49,7 @@ class _MyAppState extends State<MapScreen> {
       () {
         latitude = currentLocation.latitude;
         longitude = currentLocation.longitude;
-        loading = false;
+        _loading = false;
       },
     );
   }
@@ -48,8 +58,28 @@ class _MyAppState extends State<MapScreen> {
     List<Placemark> placemark =
         await Geolocator().placemarkFromCoordinates(latitude, longitude);
     setState(() {
-      address =
+      _address =
           '${placemark[0].administrativeArea} ${placemark[0].locality} ${placemark[0].name}';
+    });
+  }
+
+  Auth _auth = Auth();
+  FirebaseUser _loggedUser;
+  String _userEmail;
+
+  getCurrentUser() async {
+    _loggedUser = await _auth.getUser();
+    setState(() {
+      _userEmail = _loggedUser.email;
+    });
+  }
+
+  currentDate() {
+    var now = new DateTime.now();
+    var formatter = new DateFormat('yyyy-MM-dd');
+    String formattedDate = formatter.format(now);
+    setState(() {
+      _date = formattedDate;
     });
   }
 
@@ -59,7 +89,7 @@ class _MyAppState extends State<MapScreen> {
         MediaQuery.of(context).orientation == Orientation.portrait;
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
-    if (loading == false) {
+    if (_loading == false) {
       return Stack(
         children: [
           Container(
@@ -146,37 +176,33 @@ class _MyAppState extends State<MapScreen> {
                     ],
                   ),
                 ),
-                Container(
-                  height: isPortrait ? height * 0.09 : height * 0.1,
-                  width: width,
-                  margin:
-                      EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
-                  decoration: BoxDecoration(
-                    color: KSecondColor,
-                    borderRadius: BorderRadius.circular(10.0),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black26,
-                        offset: Offset(2, 3),
-                        blurRadius: 2.0,
-                      ),
-                      BoxShadow(
-                        color: Colors.black26,
-                        offset: Offset(-2, -1),
-                        blurRadius: 2.0,
-                      ),
-                    ],
-                  ),
-                  child: Center(
-                    child: Text(
-                      'Confirm Order',
-                      style: TextStyle(
-                          color: KWhiteColor,
-                          fontSize: 22.0,
-                          fontWeight: FontWeight.bold),
-                    ),
-                  ),
-                ),
+                confirmationOrderButton(
+                  isPortrait,
+                  height,
+                  width,
+                  () async {
+                    try {
+                      await getCurrentAddress();
+                      currentDate();
+                      getCurrentUser();
+                      Store _store = Store();
+                      _store.viewStoreOrders(
+                        data: <String, dynamic>{
+                          KUserEmail: _userEmail,
+                          KPhoneNumber: widget.phoneNumber,
+                          KTotalPrice: widget.totalPrice,
+                          KAddress: _address,
+                          KCurrentDate: _date,
+                        },
+                        meals: widget.meals,
+                      );
+                      Toast.show("Ordered Successfully", context,
+                          duration: Toast.LENGTH_LONG, gravity: Toast.BOTTOM);
+                    } catch (e) {
+                      print(e.toString());
+                    }
+                  },
+                )
               ],
             ),
           ),
@@ -191,8 +217,3 @@ class _MyAppState extends State<MapScreen> {
     }
   }
 }
-
-/*onTap: () async {
-          await getCurrentAddress();
-          print(address);
-        },*/

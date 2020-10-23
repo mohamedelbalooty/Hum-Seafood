@@ -4,7 +4,6 @@ import 'package:humseafood/SharedFunctions/customShowMenu.dart';
 import 'package:humseafood/constants.dart';
 import 'package:humseafood/model/meal.dart';
 import 'package:humseafood/provider/cart_item.dart';
-import 'package:humseafood/screens/userView/home_screen.dart';
 import 'package:humseafood/screens/userView/meal_screen.dart';
 import 'package:humseafood/widgets/userView_widgets/cartScreen_widgets/cartItem.dart';
 import 'package:humseafood/widgets/userView_widgets/cartScreen_widgets/cartScreenAppBar.dart';
@@ -13,6 +12,8 @@ import 'map_screen.dart';
 
 class CartScreen extends StatelessWidget {
   static String id = 'CartScreen';
+  GlobalKey<FormState> _globalKey = GlobalKey<FormState>();
+  String _phoneNumber;
 
   @override
   Widget build(BuildContext context) {
@@ -111,16 +112,9 @@ class CartScreen extends StatelessWidget {
     );
   }
 
-  GlobalKey<FormState> _globalKey = GlobalKey<FormState>();
-  String _phoneNumber;
-
   void customShowDialog(List<Meal> meals, context, width) async {
     String price = getTotalPrice(meals);
     AlertDialog alertDialog = AlertDialog(
-      // title: Text(
-      //   'Total Price = $price L.E',
-      //   style: TextStyle(color: Colors.blueGrey.withOpacity(0.9),),
-      // ),
       content: SizedBox(
         height: 110.0,
         width: width,
@@ -129,42 +123,7 @@ class CartScreen extends StatelessWidget {
             Expanded(
               child: Form(
                 key: _globalKey,
-                child: TextFormField(
-                  validator: (String value) {
-                    if (value.isEmpty) {
-                      return 'Enter phone number';
-                    } else {
-                      return null;
-                    }
-                  },
-                  onSaved: (String value) {
-                    _phoneNumber = value;
-                  },
-                  cursorColor: KSecondColor,
-                  style: TextStyle(color: Colors.blueGrey),
-                  decoration: InputDecoration(
-                    labelText: 'Phone Number',
-                    labelStyle: TextStyle(
-                      color: Colors.blueGrey.withOpacity(0.9),
-                    ),
-                    enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(8.0),
-                      borderSide: BorderSide(color: KSecondColor, width: 1.0),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(8.0),
-                      borderSide: BorderSide(color: KSecondColor, width: 1.0),
-                    ),
-                    errorBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(8.0),
-                      borderSide: BorderSide(color: KSecondColor, width: 1.0),
-                    ),
-                    focusedErrorBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(8.0),
-                      borderSide: BorderSide(color: KSecondColor, width: 1.0),
-                    ),
-                  ),
-                ),
+                child: phoneNumberTextField(),
               ),
             ),
             SizedBox(
@@ -173,7 +132,7 @@ class CartScreen extends StatelessWidget {
             Expanded(
               child: InkWell(
                 onTap: () {
-                  if(_globalKey.currentState.validate()){
+                  if (_globalKey.currentState.validate()) {
                     _globalKey.currentState.save();
                     _globalKey.currentState.reset();
                     Navigator.pop(context);
@@ -181,13 +140,13 @@ class CartScreen extends StatelessWidget {
                       context,
                       MaterialPageRoute(
                         builder: (context) => MapScreen(
+                          phoneNumber: _phoneNumber,
                           totalPrice: price,
                           meals: meals,
                         ),
                       ),
                     );
                   }
-
                 },
                 child: Container(
                   width: width,
@@ -225,6 +184,37 @@ class CartScreen extends StatelessWidget {
         builder: (context) {
           return alertDialog;
         });
+  }
+
+  Widget phoneNumberTextField() {
+    OutlineInputBorder textFieldBorder = OutlineInputBorder(
+      borderRadius: BorderRadius.circular(8.0),
+      borderSide: BorderSide(color: KSecondColor, width: 1.0),
+    );
+    return TextFormField(
+      validator: (String value) {
+        if (value.isEmpty) {
+          return 'Enter phone number';
+        } else {
+          return null;
+        }
+      },
+      onSaved: (String value) {
+        _phoneNumber = value;
+      },
+      cursorColor: KSecondColor,
+      style: TextStyle(color: Colors.blueGrey),
+      decoration: InputDecoration(
+        labelText: 'Phone Number',
+        labelStyle: TextStyle(
+          color: Colors.blueGrey.withOpacity(0.9),
+        ),
+        enabledBorder: textFieldBorder,
+        focusedBorder: textFieldBorder,
+        errorBorder: textFieldBorder,
+        focusedErrorBorder: textFieldBorder,
+      ),
+    );
   }
 
   getTotalPrice(List<Meal> meals) {

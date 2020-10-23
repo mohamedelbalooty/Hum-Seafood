@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:humseafood/constants.dart';
 import 'package:humseafood/screens/adminView//adminTransactionScreens/add_meal.dart';
 import 'package:humseafood/screens/adminView/adminTransactionScreens/manage_meal.dart';
-import 'package:humseafood/screens/adminView/adminTransactionScreens/view_order.dart';
+import 'package:humseafood/screens/adminView/adminTransactionScreens/view_orders.dart';
 import 'package:humseafood/widgets/adminView_widgets/admin_panelButton.dart';
 
 class AdminPanel extends StatelessWidget {
@@ -86,7 +86,7 @@ class AdminPanel extends StatelessWidget {
                     Colors.lightGreen,
                     Colors.greenAccent,
                     'View Orders',
-                    ViewOrder.id,
+                    ViewOrders.id,
                     Icons.rate_review),
               ],
             ),

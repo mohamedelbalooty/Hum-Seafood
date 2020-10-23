@@ -13,6 +13,7 @@ const String KMealPrice = 'MealPrice';
 const String KMealCategory = 'MealCategory';
 const String KMealDescription = 'MealDescription';
 const String KMealImageURL = 'MealImageURL';
+const String KMealQuantity = 'MealQuantity';
 
 const String KSoupCategory = 'soup';
 const String KPastaCategory = 'pasta';
@@ -21,3 +22,10 @@ const String KPizzaCategory = 'pizza';
 const String KSeafoodCategory = 'seafood';
 const String KSteakCategory = 'steak';
 
+const String KOrders = 'orders';
+const String KOrderDetails = 'orderDetails';
+const String KTotalPrice = 'totalPrice';
+const String KPhoneNumber = 'phoneNumber';
+const String KAddress = 'address';
+const String KCurrentDate = 'currentDate';
+const String KUserEmail = 'userEmail';

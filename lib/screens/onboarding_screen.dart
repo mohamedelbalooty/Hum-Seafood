@@ -1,99 +1,160 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:introduction_screen/introduction_screen.dart';
-import 'package:gradient_text/gradient_text.dart';
-import '../constants.dart';
-import 'login_screen.dart';
+import 'package:humseafood/screens/login_screen.dart';
+import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
-// ignore: must_be_immutable
-class OnboardingScreen extends StatelessWidget {
+class OnboardingScreen extends StatefulWidget {
   static String id = 'OnboardingScreen';
-  List<PageViewModel> pages = [
-    _pageViewItem(
-        "Title of first page",
-        "Here you can write the description of the page, to explain someting...",
-        'menu'),
-    _pageViewItem(
-        "Title of first page",
-        "Here you can write the description of the page, to explain someting...",
-        'service'),
-    _pageViewItem(
-        "Title of first page",
-        "Here you can write the description of the page, to explain someting...",
-        'payment'),
-  ];
+  @override
+  _OnboardingScreenState createState() => _OnboardingScreenState();
+}
+
+class _OnboardingScreenState extends State<OnboardingScreen> {
+  int _selectedPageIndex = 0;
+  PageController _pageController;
+
+  @override
+  void initState() {
+    super.initState();
+    _pageController = PageController(
+      initialPage: 0,
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
+    bool isPortrait =
+        MediaQuery.of(context).orientation == Orientation.portrait;
+    double height = MediaQuery.of(context).size.height;
+    double width = MediaQuery.of(context).size.width;
     return Scaffold(
-      body: IntroductionScreen(
-        pages: pages,
-        onDone: () {
-          Navigator.pushReplacementNamed(context, LoginScreen.id);
-        },
-        onSkip: () {
-          Navigator.pushReplacementNamed(context, LoginScreen.id);
-        },
-        showSkipButton: true,
-        skip: Icon(
-          Icons.skip_next,
-          size: 30.0,
-          color: Colors.black54,
-        ),
-        next: Icon(
-          Icons.arrow_forward,
-          size: 26.0,
-          color: Colors.black54,
-        ),
-        done: Text(
-            'Done',
-            style: TextStyle(
-              color: KSecondColor,
-              fontSize: 17.0,
-              fontWeight: FontWeight.w600,
+      body: SingleChildScrollView(
+        child: Column(
+          children: <Widget>[
+            SizedBox(
+              height: isPortrait ? height * 0.7 : height * 1.5,
+              child: PageView(
+                controller: _pageController,
+                onPageChanged: (int index) {
+                  setState(() {
+                    _selectedPageIndex = index;
+                  });
+                },
+                children: _pages(height, width),
+              ),
             ),
-            textAlign: TextAlign.center),
-        dotsDecorator: DotsDecorator(
-          size: Size.square(10.0),
-          activeSize: Size(20.0, 10.0),
-          activeColor: KSecondColor,
-          color: Colors.black26,
-          spacing: EdgeInsets.symmetric(horizontal: 3.0),
-          activeShape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(25.0),
-          ),
+            Container(
+              height: isPortrait ? height * 0.3 : height * 0.5,
+              color: Colors.transparent,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  SmoothPageIndicator(
+                      controller: _pageController,
+                      count: 3,
+                      axisDirection: Axis.horizontal,
+                      effect: WormEffect(
+                        spacing: 20.0,
+                        dotHeight: 12.0,
+                        dotWidth: 12.0,
+                        activeDotColor: Colors.orange.shade700,
+                      ),
+                      onDotClicked: (index) {
+                        _pageController.animateToPage(index,
+                            duration: Duration(milliseconds: 400),
+                            curve: Curves.easeInOut);
+                      }),
+                  GestureDetector(
+                    onTap: () {
+                      if (_selectedPageIndex < 2) {
+                        setState(() {
+                          _selectedPageIndex++;
+                        });
+                        _pageController.animateToPage(_selectedPageIndex++,
+                            duration: Duration(milliseconds: 400),
+                            curve: Curves.easeInOut);
+                      }else{
+                        Navigator.pushReplacementNamed(context, LoginScreen.id);
+                      }
+                    },
+                    child: Container(
+                      height: 45.0,
+                      width: width - 20.0,
+                      margin: EdgeInsets.symmetric(vertical: 35.0),
+                      decoration: BoxDecoration(
+                        color: Colors.orange.shade700,
+                        borderRadius: BorderRadius.circular(25.0),
+                      ),
+                      child: Center(
+                        child: Text(
+                          _selectedPageIndex==2 ? 'Done' :'Next',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 18.0,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.pushReplacementNamed(context, LoginScreen.id);
+                    },
+                    child: Text(
+                      'Skip',
+                      style: TextStyle(
+                        color: Colors.blueGrey.withOpacity(0.9),
+                        fontSize: 18.0,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
         ),
       ),
     );
   }
 
-  static _pageViewItem(String title, String content, String imageName) {
-    return PageViewModel(
-      // title: title,
-      titleWidget: GradientText(title,
-          gradient: LinearGradient(
-            colors: [Colors.deepOrange, Colors.orange.shade600],
-          ),
-          style: TextStyle(
-            fontSize: 22.0,
-            fontWeight: FontWeight.bold,
-          ),
-          textAlign: TextAlign.center),
-      body: content,
-      image: Center(
-        child: Image.asset(
+  List<Widget> _pages(height, width) {
+    List<Widget> pageViewItems = [];
+    return pageViewItems = [
+      _customPageViewItem(height, width,
+          title: 'Food You Love', imageName: 'food'),
+      _customPageViewItem(height, width,
+          title: 'Delivered To You', imageName: 'deliver'),
+      _customPageViewItem(height, width,
+          title: 'To Your Location', imageName: 'location'),
+    ];
+  }
+
+  Widget _customPageViewItem(double height, double width,
+      {@required String title, @required String imageName}) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      children: <Widget>[
+        SizedBox(
+          height: height * 0.2,
+        ),
+        Image.asset(
           'assets/images/onboarding_images/$imageName.png',
-          height: 200.0,
-          width: 200.0,
+          height: width * 0.6,
+          width: width * 0.6,
         ),
-      ),
-      decoration: PageDecoration(
-        pageColor: KWhiteColor,
-        bodyTextStyle: TextStyle(
-          fontWeight: FontWeight.w500,
-          fontSize: 20.0,
-          letterSpacing: 0.8,
+        Padding(
+          padding: EdgeInsets.only(top: 20.0),
+          child: Text(
+            title,
+            style: TextStyle(
+              color: Colors.blueGrey.withOpacity(0.9),
+              fontSize: 26.0,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
         ),
-      ),
+      ],
     );
   }
 }

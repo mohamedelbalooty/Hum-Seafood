@@ -27,4 +27,8 @@ class Auth {
     FirebaseUser firebaseUser = authResult.user;
     _googleSignIn.signInSilently();
   }
+
+  Future<FirebaseUser> getUser() async {
+    return await _auth.currentUser();
+  }
 }
