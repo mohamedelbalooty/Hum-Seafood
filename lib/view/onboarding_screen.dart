@@ -1,10 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:humseafood/screens/login_screen.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
+import 'login_screen.dart';
 
 class OnboardingScreen extends StatefulWidget {
   static String id = 'OnboardingScreen';
+
   @override
   _OnboardingScreenState createState() => _OnboardingScreenState();
 }
@@ -74,7 +75,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                         _pageController.animateToPage(_selectedPageIndex++,
                             duration: Duration(milliseconds: 400),
                             curve: Curves.easeInOut);
-                      }else{
+                      } else {
                         Navigator.pushReplacementNamed(context, LoginScreen.id);
                       }
                     },
@@ -88,7 +89,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                       ),
                       child: Center(
                         child: Text(
-                          _selectedPageIndex==2 ? 'Done' :'Next',
+                          _selectedPageIndex == 2 ? 'Done' : 'Next',
                           style: TextStyle(
                             color: Colors.white,
                             fontSize: 18.0,

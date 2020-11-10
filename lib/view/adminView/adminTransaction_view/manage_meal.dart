@@ -1,13 +1,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:humseafood/controller/store_controller.dart';
 import 'package:humseafood/model/meal.dart';
-import 'package:humseafood/screens/adminView/adminTransactionScreens/edit_meal.dart';
-import 'package:humseafood/services/store.dart';
 import 'package:humseafood/widgets/adminView_widgets/editMeal/manage_mealAppBar.dart';
 import 'package:humseafood/widgets/adminView_widgets/editMeal/mealCard.dart';
 import 'package:humseafood/widgets/snapshot_errorMessage.dart';
 import '../../../constants.dart';
+import 'edit_meal.dart';
 
 class ManageMeals extends StatefulWidget {
   static String id = 'ManageMeals';

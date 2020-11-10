@@ -16,20 +16,29 @@ class Store {
     });
   }
 
-  Stream<QuerySnapshot> loadMeals(){
+  Stream<QuerySnapshot> loadMeals() {
     return _firestore.collection(KMealCollection).snapshots();
   }
-  deleteMeal(documentId){
+
+  deleteMeal(documentId) {
     _firestore.collection(KMealCollection).document(documentId).delete();
   }
-  editMeal(data, documentId){
-    _firestore.collection(KMealCollection).document(documentId).updateData(data);
+
+  editMeal(data, documentId) {
+    _firestore
+        .collection(KMealCollection)
+        .document(documentId)
+        .updateData(data);
   }
-  viewStoreOrders({@required data, @required List<Meal> meals}){
+
+  viewStoreOrders({@required data, @required List<Meal> meals}) {
     var documentRef = _firestore.collection(KOrders).document();
     documentRef.setData(data);
-    for(var meal in meals){
-      documentRef.collection(KOrderDetails).document().setData(<String, dynamic>{
+    for (var meal in meals) {
+      documentRef
+          .collection(KOrderDetails)
+          .document()
+          .setData(<String, dynamic>{
         KMealName: meal.mealName,
         KMealPrice: meal.mealPrice,
         KMealQuantity: meal.mealQuantity,
@@ -37,7 +46,8 @@ class Store {
       });
     }
   }
-  Stream<QuerySnapshot> loadOrders(){
+
+  Stream<QuerySnapshot> loadOrders() {
     return _firestore.collection(KOrders).snapshots();
   }
 }

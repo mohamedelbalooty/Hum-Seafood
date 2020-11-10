@@ -2,10 +2,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:humseafood/constants.dart';
+import 'package:humseafood/controller/store_controller.dart';
 import 'package:humseafood/model/order.dart';
-import 'package:humseafood/services/store.dart';
 import 'package:humseafood/widgets/adminView_widgets/viewOrders/user_details.dart';
-
 import 'order_details.dart';
 
 class ViewOrders extends StatelessWidget {
@@ -126,29 +125,33 @@ class ViewOrders extends StatelessWidget {
                             child: Padding(
                               padding: EdgeInsets.symmetric(horizontal: 10.0),
                               child: Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
                                   Text(
                                     'Total Price',
                                     style: TextStyle(
-                                        color: KBlackColor,
-                                        fontSize: 28.0,
-                                        fontWeight: FontWeight.bold,),
+                                      color: KBlackColor,
+                                      fontSize: 28.0,
+                                      fontWeight: FontWeight.bold,
+                                    ),
                                   ),
                                   Expanded(child: SizedBox()),
                                   Text(
                                     '${_orders[index].totalPrice} L.E',
                                     style: TextStyle(
-                                      color: KBlackColor,
-                                      fontSize: 19.0,
-                                        fontWeight: FontWeight.bold
-                                    ),
+                                        color: KBlackColor,
+                                        fontSize: 19.0,
+                                        fontWeight: FontWeight.bold),
                                   ),
-                                  SizedBox(width: 10.0,),
+                                  SizedBox(
+                                    width: 10.0,
+                                  ),
                                   InkWell(
-                                    onTap: (){
-                                      Navigator.pushNamed(context, OrderDetails.id);
+                                    onTap: () {
+                                      Navigator.pushNamed(
+                                          context, OrderDetails.id);
                                     },
                                     child: Icon(
                                       Icons.keyboard_arrow_down,

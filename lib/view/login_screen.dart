@@ -2,10 +2,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:humseafood/controller/auth_controller.dart';
 import 'package:humseafood/provider/modal_hud.dart';
-import 'package:humseafood/screens/adminView/admin_screen.dart';
-import 'package:humseafood/screens/userView/home_screen.dart';
-import 'package:humseafood/services/auth.dart';
 import 'package:humseafood/widgets/authentication_widgets/admin_button.dart';
 import 'package:humseafood/widgets/authentication_widgets/authentication_button.dart';
 import 'package:humseafood/widgets/authentication_widgets/custom_divider.dart';
@@ -15,8 +13,11 @@ import 'package:humseafood/widgets/authentication_widgets/google_authButton.dart
 import 'package:humseafood/widgets/custom_snackBar.dart';
 import 'package:humseafood/widgets/authentication_widgets/custom_textField.dart';
 import 'package:provider/provider.dart';
+import 'adminView/admin_screen.dart';
 import 'signUp_screen.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
+
+import 'userView/home_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   static String id = 'LoginScreen';

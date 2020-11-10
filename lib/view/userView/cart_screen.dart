@@ -4,11 +4,11 @@ import 'package:humseafood/SharedFunctions/customShowMenu.dart';
 import 'package:humseafood/constants.dart';
 import 'package:humseafood/model/meal.dart';
 import 'package:humseafood/provider/cart_item.dart';
-import 'package:humseafood/screens/userView/meal_screen.dart';
 import 'package:humseafood/widgets/userView_widgets/cartScreen_widgets/cartItem.dart';
 import 'package:humseafood/widgets/userView_widgets/cartScreen_widgets/cartScreenAppBar.dart';
 import 'package:provider/provider.dart';
 import 'map_screen.dart';
+import 'meal_screen.dart';
 
 class CartScreen extends StatelessWidget {
   static String id = 'CartScreen';

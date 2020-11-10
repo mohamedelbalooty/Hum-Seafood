@@ -2,8 +2,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:humseafood/controller/auth_controller.dart';
 import 'package:humseafood/provider/modal_hud.dart';
-import 'package:humseafood/services/auth.dart';
 import 'package:humseafood/widgets/authentication_widgets/authentication_button.dart';
 import 'package:humseafood/widgets/authentication_widgets/custom_divider.dart';
 import 'package:humseafood/widgets/authentication_widgets/custom_logo.dart';
@@ -76,8 +76,8 @@ class SignUpScreen extends StatelessWidget {
                         if (_globalKey.currentState.validate()) {
                           try {
                             _globalKey.currentState.save();
-                            AuthResult _signUpResult =
-                                await _auth.signUp(_email.trim(), _password.trim());
+                            AuthResult _signUpResult = await _auth.signUp(
+                                _email.trim(), _password.trim());
                             modalHud.loadChanging(false);
                           } on PlatformException catch (exception) {
                             modalHud.loadChanging(false);

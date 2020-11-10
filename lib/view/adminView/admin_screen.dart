@@ -1,10 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:humseafood/constants.dart';
-import 'package:humseafood/screens/adminView//adminTransactionScreens/add_meal.dart';
-import 'package:humseafood/screens/adminView/adminTransactionScreens/manage_meal.dart';
-import 'package:humseafood/screens/adminView/adminTransactionScreens/view_orders.dart';
 import 'package:humseafood/widgets/adminView_widgets/admin_panelButton.dart';
+
+import 'adminTransaction_view/add_meal.dart';
+import 'adminTransaction_view/manage_meal.dart';
+import 'adminTransaction_view/view_orders.dart';
 
 class AdminPanel extends StatelessWidget {
   static String id = 'AdminScreen';

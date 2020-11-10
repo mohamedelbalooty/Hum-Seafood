@@ -1,30 +1,33 @@
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:humseafood/provider/modal_hud.dart';
+import 'dart:io';
+import 'package:humseafood/controller/store_controller.dart';
 import 'package:humseafood/widgets/adminView_widgets/addMeal/add_cardDetails.dart';
 import 'package:humseafood/widgets/adminView_widgets/addMeal/add_imageButton.dart';
 import 'package:humseafood/widgets/adminView_widgets/addMeal/add_mealBackground.dart';
 import 'package:humseafood/widgets/adminView_widgets/addMeal/add_mealButton.dart';
 import 'package:humseafood/widgets/adminView_widgets/transaction_mealAppBar.dart';
-import 'package:modal_progress_hud/modal_progress_hud.dart';
-import 'dart:io';
 import 'package:path/path.dart' as path;
-import 'package:humseafood/model/meal.dart';
-import 'package:humseafood/services/store.dart';
-import 'package:firebase_storage/firebase_storage.dart';
-import 'package:humseafood/widgets/custom_snackBar.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter/services.dart';
+import 'package:humseafood/constants.dart';
+import 'package:humseafood/model/meal.dart';
+import 'package:humseafood/provider/modal_hud.dart';
+import 'package:humseafood/widgets/custom_snackBar.dart';
+import 'package:modal_progress_hud/modal_progress_hud.dart';
+import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class AddMeal extends StatefulWidget {
-  static String id = 'AddMeal';
+class EditMeal extends StatefulWidget {
+  static String id = 'EditMeal';
+  Meal meals;
+
+  EditMeal({@required this.meals});
 
   @override
-  _AddMealState createState() => _AddMealState();
+  _EditMealState createState() => _EditMealState();
 }
 
-class _AddMealState extends State<AddMeal> {
+class _EditMealState extends State<EditMeal> {
   GlobalKey<FormState> _globalKey = GlobalKey<FormState>();
   Store _store = Store();
   String _name;
@@ -55,7 +58,7 @@ class _AddMealState extends State<AddMeal> {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
                       transactionMealAppBar(
-                          context, 'Add Meal', height, isPortrait),
+                          context, 'Edit MeaL Details', height, isPortrait),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
@@ -102,7 +105,7 @@ class _AddMealState extends State<AddMeal> {
                         onTap: () async {
                           _validate(context);
                         },
-                        child: addMealButton(height, width, isPortrait, 'Add'),
+                        child: addMealButton(height, width, isPortrait, 'Edit'),
                       ),
                     ],
                   ),
@@ -124,13 +127,16 @@ class _AddMealState extends State<AddMeal> {
       await upLoadImage(context);
       if (_url != null) {
         try {
-          _store.addMeal(Meal(
-            mealName: _name.trim(),
-            mealPrice: _price.trim(),
-            mealCategory: _category.toLowerCase().trim(),
-            mealDescription: _description.trim(),
-            imageURL: _url,
-          ));
+          _store.editMeal(
+            <String, dynamic>{
+              KMealName: _name,
+              KMealPrice: _price,
+              KMealCategory: _category,
+              KMealDescription: _description,
+              KMealImageURL: _url,
+            },
+            widget.meals.mealId,
+          );
           modalHud.loadChanging(false);
           Scaffold.of(context).showSnackBar(customSnackBar('Success'));
         } on PlatformException catch (exception) {

@@ -1,21 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:humseafood/provider/cart_item.dart';
 import 'package:humseafood/provider/modal_hud.dart';
-import 'package:humseafood/screens/adminView/adminTransactionScreens/add_meal.dart';
-import 'package:humseafood/screens/adminView/adminTransactionScreens/edit_meal.dart';
-import 'package:humseafood/screens/adminView/admin_screen.dart';
-import 'package:humseafood/screens/adminView/adminTransactionScreens/manage_meal.dart';
-import 'package:humseafood/screens/onboarding_screen.dart';
-import 'package:humseafood/screens/userView/cart_screen.dart';
-import 'package:humseafood/screens/userView/home_screen.dart';
-import 'package:humseafood/screens/userView/meal_screen.dart';
-import 'screens/adminView/adminTransactionScreens/order_details.dart';
-import 'screens/adminView/adminTransactionScreens/view_orders.dart';
-import 'screens/login_screen.dart';
-import 'screens/signUp_screen.dart';
-import 'screens/splash_screen.dart';
 import 'package:provider/provider.dart';
-import 'screens/userView/map_screen.dart';
+import 'view/adminView/adminTransaction_view/add_meal.dart';
+import 'view/adminView/adminTransaction_view/edit_meal.dart';
+import 'view/adminView/adminTransaction_view/manage_meal.dart';
+import 'view/adminView/adminTransaction_view/order_details.dart';
+import 'view/adminView/adminTransaction_view/view_orders.dart';
+import 'view/adminView/admin_screen.dart';
+import 'view/login_screen.dart';
+import 'view/onboarding_screen.dart';
+import 'view/signUp_screen.dart';
+import 'view/splash_screen.dart';
+import 'view/userView/cart_screen.dart';
+import 'view/userView/home_screen.dart';
+import 'view/userView/meal_screen.dart';
 
 void main() => runApp(MyApp());
 

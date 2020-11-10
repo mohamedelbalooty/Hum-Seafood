@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:humseafood/screens/userView/home_screen.dart';
-import 'package:humseafood/services/auth.dart';
+import 'package:humseafood/controller/auth_controller.dart';
+import 'package:humseafood/view/userView/home_screen.dart';
 import '../../constants.dart';
 import '../custom_snackBar.dart';
 

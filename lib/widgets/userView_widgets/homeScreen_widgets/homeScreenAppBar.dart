@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:humseafood/screens/userView/cart_screen.dart';
+import 'package:humseafood/view/userView/cart_screen.dart';
 import '../../../constants.dart';
 import 'drawerIcon.dart';
 
